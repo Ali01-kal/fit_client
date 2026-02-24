@@ -79,7 +79,12 @@ ASGI_APPLICATION = "fit_client.asgi.application"
 
 db_url = env("DATABASE_URL", "sqlite:///db.sqlite3")
 if db_url.startswith("sqlite:///"):
-    DATABASES = {"default": {"ENGINE": "django.db.backends.sqlite3", "NAME": BASE_DIR / db_url.replace("sqlite:///", "")}}
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / db_url.replace("sqlite:///", ""),
+        }
+    }
 else:
     # Simple parser for postgres URLs: postgresql://user:pass@host:port/dbname
     from urllib.parse import urlparse
@@ -93,6 +98,7 @@ else:
             "PASSWORD": parsed.password,
             "HOST": parsed.hostname,
             "PORT": parsed.port or 5432,
+            "CONN_MAX_AGE": env("DB_CONN_MAX_AGE", 60, int),
         }
     }
 
@@ -129,6 +135,12 @@ SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 SECURE_SSL_REDIRECT = not DEBUG
 SESSION_COOKIE_SECURE = not DEBUG
 CSRF_COOKIE_SECURE = not DEBUG
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_REFERRER_POLICY = env("SECURE_REFERRER_POLICY", "same-origin")
+X_FRAME_OPTIONS = "DENY"
+SECURE_HSTS_SECONDS = env("SECURE_HSTS_SECONDS", 0 if DEBUG else 3600, int)
+SECURE_HSTS_INCLUDE_SUBDOMAINS = env("SECURE_HSTS_INCLUDE_SUBDOMAINS", not DEBUG, bool)
+SECURE_HSTS_PRELOAD = env("SECURE_HSTS_PRELOAD", False, bool)
 
 MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
 

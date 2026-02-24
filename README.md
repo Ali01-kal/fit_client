@@ -105,18 +105,49 @@ python manage.py runserver
 
 Для восстановления пароля по email на продакшене настройте SMTP (`EMAIL_BACKEND`, `EMAIL_HOST`, `EMAIL_PORT`, `EMAIL_HOST_USER`, `EMAIL_HOST_PASSWORD`).
 
+### Прод-конфигурация без домена (можно подготовить заранее)
+
+Минимум для проверки прод-режима локально/на VPS:
+
+```env
+DEBUG=False
+ALLOWED_HOSTS=127.0.0.1,localhost
+CSRF_TRUSTED_ORIGINS=http://127.0.0.1:8000,http://localhost:8000
+DATABASE_URL=postgresql://postgres:password@127.0.0.1:5432/fitclient
+DB_CONN_MAX_AGE=60
+SECURE_HSTS_SECONDS=3600
+SECURE_HSTS_INCLUDE_SUBDOMAINS=False
+SECURE_HSTS_PRELOAD=False
+```
+
+Проверка health endpoint (для uptime-мониторинга / хостинга):
+
+```bash
+GET /health/
+```
+
+Ожидаемый ответ: `ok`
+
 ## Логи / рестарт / диагностика
 
 - Логи: stdout/stderr (`gunicorn`, панель хостинга, `journalctl`)
 - Рестарт (пример VPS):
   - `sudo systemctl restart fitclient`
   - `sudo journalctl -u fitclient -n 200`
+- Проверка статуса сервиса:
+  - `sudo systemctl status fitclient`
+- Health-check:
+  - `curl http://127.0.0.1:8000/health/`
 
 ## Резервное копирование
 
 - Ежедневный `pg_dump`
 - Бэкап `media/`
 - Хранить несколько последних копий
+- Пример дампа PostgreSQL:
+  - `pg_dump -Fc -U postgres -d fitclient > backup_YYYYMMDD.dump`
+- Пример восстановления:
+  - `pg_restore -U postgres -d fitclient backup_YYYYMMDD.dump`
 
 ## Free Template (обязательное условие преподавателя)
 

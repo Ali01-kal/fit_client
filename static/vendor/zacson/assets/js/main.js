@@ -170,7 +170,9 @@
 
 // 11. ---- Mailchimp js --------//  
     function mailChimp() {
-      $('#mc_embed_signup').find('form').ajaxChimp();
+      if ($.fn.ajaxChimp) {
+        $('#mc_embed_signup').find('form').ajaxChimp();
+      }
     }
     mailChimp();
 

@@ -86,6 +86,7 @@ python manage.py runserver
 ## Оптимизация ассетов и доступность
 
 - В базовом шаблоне отключены неиспользуемые include (`gijgo.css`, `gijgo.min.js`, `jquery.countdown.min.js`)
+- Выполнен безопасный cleanup неиспользуемых Zacson-ассетов (лишние runtime-plugins, source map, вспомогательные dev-файлы)
 - Основные JS подключаются с `defer` для ускорения первой отрисовки
 - В `vendor/zacson/assets/js/main.js` добавлены проверки наличия плагинов (`datepicker`, `timepicker`, `counterUp`, `snakeify`)
 - Добавлен `Skip to content` и `aria-label` для icon-only кнопок/ссылок

@@ -1,0 +1,44 @@
+{% extends "base_zacson.html" %}
+{% load static %}
+{% block title %}About fitClient{% endblock %}
+{% block body_class %}zc-inner{% endblock %}
+{% block page_banner %}
+<div class="slider-area2">
+  <div class="slider-height2 d-flex align-items-center">
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-12"><div class="hero-cap text-center pt-50"><h2>About fitClient</h2></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block content %}
+<section class="about-area section-padding30">
+  <div class="container">
+    <div class="row align-items-center">
+    <div class="col-lg-6">
+      <img class="img-fluid mb-4 mb-lg-0" src="{% static 'vendor/zacson/assets/img/gallery/about.png' %}" alt="About fitClient">
+    </div>
+    <div class="col-lg-6">
+      <div class="about-caption mb-50 about-fitclient-text-dark">
+        <div class="section-tittle mb-35">
+          <span>About Our Project</span>
+          <h2>fitClient Fitness CRM System</h2>
+        </div>
+        <p>Клиенттер, тренерлер, бағдарламалар, абонементтер, пікірлер, API және admin панелі бір Django жобасында біріктірілген.</p>
+        <p>Бұл нұсқа Colorlib Zacson шаблоны негізінде интеграцияланып, `fitClient` деректерімен толтырылды.</p>
+        <div class="mt-3">
+          <h4>Команда проекта (заполнить перед сдачей)</h4>
+          <ul>
+            <li>Участник 1 — Backend / Models / API</li>
+            <li>Участник 2 — Frontend / Templates / CSS</li>
+            <li>Участник 3 — Deployment / PostgreSQL / Domain</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+{% endblock %}

@@ -1,0 +1,187 @@
+{% load static %}
+<!doctype html>
+<html class="no-js" lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>{% block title %}fitClient{% endblock %}</title>
+    <meta name="description" content="fitClient - фитнес клиенттер деректерін басқару жүйесі">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'vendor/zacson/assets/img/favicon.ico' %}">
+
+    <link rel="stylesheet" href="{% static 'vendor/zacson/assets/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/zacson/assets/css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/zacson/assets/css/slicknav.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/zacson/assets/css/flaticon.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/zacson/assets/css/gijgo.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/zacson/assets/css/animate.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/zacson/assets/css/animated-headline.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/zacson/assets/css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/zacson/assets/css/fontawesome-all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/zacson/assets/css/themify-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/zacson/assets/css/slick.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/zacson/assets/css/nice-select.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/zacson/assets/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}?v=20260223-1">
+    {% block styles %}{% endblock %}
+</head>
+<body class="black-bg zc-app {% block body_class %}zc-inner{% endblock %}">
+    <div id="preloader-active">
+        <div class="preloader d-flex align-items-center justify-content-center">
+            <div class="preloader-inner position-relative">
+                <div class="preloader-circle"></div>
+                <div class="preloader-img pere-text">
+                    <span class="zc-loader-text">fitClient</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <div class="header-area header-transparent">
+            <div class="main-header header-sticky">
+                <div class="container-fluid">
+                    <div class="menu-wrapper d-flex align-items-center justify-content-between">
+                        <div class="logo">
+                            <a href="{% url 'core:home' %}" class="zc-logo-text">fitClient</a>
+                        </div>
+                        <div class="main-menu f-right d-none d-lg-block">
+                            <nav>
+                                <ul id="navigation">
+                                    <li><a href="{% url 'core:home' %}" data-i18n="nav.home">Home</a></li>
+                                    <li><a href="{% url 'core:about' %}" data-i18n="footer.about">About</a></li>
+                                    <li><a href="{% url 'clients:list' %}" data-i18n="nav.clients">Clients</a></li>
+                                    <li><a href="{% url 'programs:list' %}" data-i18n="nav.programs">Programs</a></li>
+                                    <li><a href="{% url 'memberships:plans' %}" data-i18n="nav.memberships">Memberships</a></li>
+                                    <li><a href="{% url 'reviews:list' %}" data-i18n="nav.reviews">Reviews</a></li>
+                                    <li><a href="{% url 'reports:dashboard' %}" data-i18n="nav.reports">Reports</a></li>
+                                    <li><a href="{% url 'core:contact' %}" data-i18n="nav.contact">Contact</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                        <div class="header-btns d-none d-lg-flex f-right align-items-center zc-toolbar">
+                            <button type="button" class="zc-pill-btn" data-lang-toggle>KZ</button>
+                            <button type="button" class="zc-pill-btn" data-theme-toggle>Dark</button>
+                            {% if request.user.is_authenticated %}
+                                <a href="{% url 'accounts:profile' %}" class="btn zc-small-btn" data-i18n="nav.profile">Profile</a>
+                            {% else %}
+                                <a href="{% url 'login' %}" class="btn zc-small-btn" data-i18n="nav.login">Login</a>
+                            {% endif %}
+                        </div>
+                        <div class="col-12">
+                            <div class="mobile_menu d-block d-lg-none"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    {% block page_banner %}{% endblock %}
+
+    {% block content_wrapper_open %}
+    <main class="zc-main-wrap">
+      <div class="container">
+    {% endblock %}
+
+    {% if messages %}
+      <div class="row">
+        <div class="col-12">
+          {% for message in messages %}
+            <div class="alert alert-info mt-3">{{ message }}</div>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+
+    {% block content %}{% endblock %}
+
+    {% block content_wrapper_close %}
+      </div>
+    </main>
+    {% endblock %}
+
+    <footer>
+        <div class="footer-area black-bg">
+            <div class="container">
+                <div class="footer-top footer-padding">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="single-footer-caption mb-50 text-center">
+                                <div class="footer-logo wow fadeInUp" data-wow-duration="1s" data-wow-delay=".2s">
+                                    <a href="{% url 'core:home' %}" class="zc-footer-logo">fitClient</a>
+                                </div>
+                                <div class="header-area main-header2 wow fadeInUp" data-wow-duration="2s" data-wow-delay=".4s">
+                                    <div class="main-header main-header2">
+                                        <div class="menu-wrapper menu-wrapper2">
+                                            <div class="main-menu main-menu2 text-center">
+                                                <nav>
+                                                    <ul>
+                                                        <li><a href="{% url 'core:home' %}" data-i18n="nav.home">Home</a></li>
+                                                        <li><a href="{% url 'clients:list' %}" data-i18n="nav.clients">Clients</a></li>
+                                                        <li><a href="{% url 'programs:list' %}" data-i18n="nav.programs">Programs</a></li>
+                                                        <li><a href="{% url 'memberships:plans' %}" data-i18n="nav.memberships">Memberships</a></li>
+                                                        <li><a href="{% url 'reviews:list' %}" data-i18n="nav.reviews">Reviews</a></li>
+                                                        <li><a href="{% url 'core:contact' %}" data-i18n="nav.contact">Contact</a></li>
+                                                    </ul>
+                                                </nav>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="footer-social mt-30 wow fadeInUp" data-wow-duration="3s" data-wow-delay=".8s">
+                                    <a href="{% url 'api:stats' %}" title="API"><i class="fas fa-code"></i></a>
+                                    <a href="{% url 'core:dashboard' %}" title="Dashboard"><i class="fas fa-chart-line"></i></a>
+                                    <a href="{% url 'admin:index' %}" title="Admin"><i class="fas fa-user-shield"></i></a>
+                                </div>
+                                <div class="mt-25 text-white zc-footer-stats">
+                                    <span>Clients: {{ global_stats.clients }}</span>
+                                    <span>Trainers: {{ global_stats.trainers }}</span>
+                                    <span>Programs: {{ global_stats.programs }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <div class="row d-flex align-items-center">
+                        <div class="col-lg-12">
+                            <div class="footer-copy-right text-center">
+                                <p>
+                                  Copyright &copy;<script>document.write(new Date().getFullYear());</script>
+                                  fitClient | Template by <a href="https://colorlib.com" target="_blank" rel="noopener">Colorlib</a>
+                                  (Zacson). Customized for Django.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div id="back-top"><a title="Go to Top" href="#"> <i class="fas fa-level-up-alt"></i></a></div>
+
+    <script src="{% static 'vendor/zacson/assets/js/vendor/modernizr-3.5.0.min.js' %}"></script>
+    <script src="{% static 'vendor/zacson/assets/js/vendor/jquery-1.12.4.min.js' %}"></script>
+    <script src="{% static 'vendor/zacson/assets/js/popper.min.js' %}"></script>
+    <script src="{% static 'vendor/zacson/assets/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'vendor/zacson/assets/js/jquery.slicknav.min.js' %}"></script>
+    <script src="{% static 'vendor/zacson/assets/js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'vendor/zacson/assets/js/slick.min.js' %}"></script>
+    <script src="{% static 'vendor/zacson/assets/js/wow.min.js' %}"></script>
+    <script src="{% static 'vendor/zacson/assets/js/animated.headline.js' %}"></script>
+    <script src="{% static 'vendor/zacson/assets/js/jquery.magnific-popup.js' %}"></script>
+    <script src="{% static 'vendor/zacson/assets/js/gijgo.min.js' %}"></script>
+    <script src="{% static 'vendor/zacson/assets/js/jquery.nice-select.min.js' %}"></script>
+    <script src="{% static 'vendor/zacson/assets/js/jquery.sticky.js' %}"></script>
+    <script src="{% static 'vendor/zacson/assets/js/jquery.counterup.min.js' %}"></script>
+    <script src="{% static 'vendor/zacson/assets/js/waypoints.min.js' %}"></script>
+    <script src="{% static 'vendor/zacson/assets/js/jquery.countdown.min.js' %}"></script>
+    <script src="{% static 'vendor/zacson/assets/js/hover-direction-snake.min.js' %}"></script>
+    <script src="{% static 'vendor/zacson/assets/js/plugins.js' %}"></script>
+    <script src="{% static 'vendor/zacson/assets/js/main.js' %}"></script>
+    <script src="{% static 'js/app.js' %}?v=20260223-1"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

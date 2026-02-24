@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}Тарифы{% endblock %}
+{% block content %}
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <a href="{% url 'core:home' %}">Главная</a>
+  <span>Абонементы</span>
+</nav>
+<section class="section-head memberships-page-head">
+  <h1 class="page-title-dark">Тарифы / Абонементы</h1>
+  <div class="row gap">
+    {% if request.user.is_authenticated %}<a class="btn btn--accent memberships-top-btn" href="{% url 'memberships:plan_create' %}">Новый тариф</a>{% endif %}
+    {% if request.user.is_authenticated %}<a class="btn btn--ghost memberships-top-btn" href="{% url 'memberships:subscription_create' %}">Выдать абонемент</a>{% endif %}
+  </div>
+</section>
+<section class="grid grid--4">
+  <div class="metric-card"><span>Всего тарифов</span><strong>{{ stats.plans_total }}</strong></div>
+  <div class="metric-card"><span>Активных тарифов</span><strong>{{ stats.plans_active }}</strong></div>
+  <div class="metric-card"><span>Активных абонементов</span><strong>{{ stats.subs_active }}</strong></div>
+  <div class="metric-card"><span>На паузе</span><strong>{{ stats.subs_paused }}</strong></div>
+</section>
+<section class="panel memberships-page-panel">
+  <form method="get" class="filters">
+    <input type="search" name="search" value="{{ filters.search }}" placeholder="Поиск тарифа">
+    <select name="active" class="dark-select-ui">
+      <option value="">Все тарифы</option>
+      <option value="1" {% if filters.active == '1' %}selected{% endif %}>Только активные</option>
+      <option value="0" {% if filters.active == '0' %}selected{% endif %}>Только выключенные</option>
+    </select>
+    <div></div>
+    <button class="btn btn--ghost" type="submit">Фильтр</button>
+  </form>
+  <div class="grid grid--3">
+    {% for plan in plans %}
+      <article class="card hover-lift">
+        <div class="card__body">
+          <p class="eyebrow">Абонемент</p>
+          <h3>{{ plan.name }}</h3>
+          <p><strong>{{ plan.price }} ₸</strong> / {{ plan.duration_days }} дней</p>
+          <p>Лимит посещений: {{ plan.visit_limit }}</p>
+          <p>Подписок всего: {{ plan.total_subscriptions }} • Активных: {{ plan.active_subscriptions }}</p>
+          <div class="row gap" style="flex-wrap:wrap; margin:.5rem 0;">
+            {% if plan.duration_days <= 31 %}
+              <span class="badge badge--info">Monthly</span>
+            {% elif plan.duration_days <= 100 %}
+              <span class="badge badge--warning">Quarter</span>
+            {% else %}
+              <span class="badge badge--success">Long-term</span>
+            {% endif %}
+            {% if plan.visit_limit >= 999 %}
+              <span class="badge badge--success">Unlimited</span>
+            {% else %}
+              <span class="badge badge--muted">{{ plan.visit_limit }} visits</span>
+            {% endif %}
+          </div>
+          <span class="badge {% if plan.is_active %}badge--success{% else %}badge--muted{% endif %}">
+            {% if plan.is_active %}Активен{% else %}Выключен{% endif %}
+          </span>
+          <div class="spacer-sm"></div>
+          <div class="row gap" style="flex-wrap:wrap;">
+            <a class="btn btn--ghost membership-mini-btn" href="{% url 'memberships:plan_subscriptions' plan.slug %}">Подписки</a>
+            <a class="btn btn--accent membership-mini-btn" href="{% url 'memberships:subscription_create' %}?plan={{ plan.id }}">Оформить</a>
+          </div>
+        </div>
+      </article>
+    {% empty %}
+      <p class="empty">Нет тарифов. Создайте тариф или выполните <code>python manage.py seed_fitclient</code>.</p>
+    {% endfor %}
+  </div>
+  {% include "includes/pagination.html" with page_obj=page_obj filters=filters %}
+</section>
+{% endblock %}

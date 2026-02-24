@@ -1,0 +1,11 @@
+<article class="card hover-lift program-card">
+  <div class="card__body program-card__body">
+    <p class="card__meta">{{ program.category.name|default:"Без категории" }}</p>
+    <h3><a href="{% url 'programs:detail' program.slug %}">{{ program.name }}</a></h3>
+    <p>{{ program.description|truncatewords:18 }}</p>
+    <div class="program-card__badges">
+      <span class="badge badge--info program-card__badge">{{ program.duration_minutes }} минут</span>
+      <span class="badge badge--muted program-card__badge">{{ program.get_difficulty_display }}</span>
+    </div>
+  </div>
+</article>

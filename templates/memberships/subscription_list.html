@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load fitness_extras %}
+{% block title %}Подписки {{ object.name }}{% endblock %}
+{% block content %}
+<section class="section-head">
+  <h1>Подписки для "{{ object.name }}"</h1>
+  <a href="{% url 'memberships:subscription_create' %}" class="btn btn--accent">Добавить подписку</a>
+</section>
+<section class="grid grid--4">
+  {% for row in status_counts %}
+    <div class="metric-card">
+      <span>{{ row.status|title }}</span>
+      <strong>{{ row.total }}</strong>
+    </div>
+  {% empty %}
+    <div class="metric-card"><span>Подписок</span><strong>0</strong></div>
+  {% endfor %}
+</section>
+<section class="panel">
+  <ul class="clean-list">
+    {% for s in subscriptions %}
+      <li class="row spread" style="gap:1rem; align-items:flex-start; flex-wrap:wrap;">
+        <div>
+          <strong>{{ s.client.name }}</strong>
+          <div>{{ s.starts_on }} - {{ s.ends_on }}</div>
+          <small>Посещений использовано: {{ s.visits_used }} / {{ object.visit_limit }}</small>
+        </div>
+        <span class="{{ s.status|status_badge }}">{{ s.get_status_display }}</span>
+      </li>
+    {% empty %}<li>Нет подписок для этого тарифа.</li>{% endfor %}
+  </ul>
+</section>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Форма программы{% endblock %}
+{% block content %}
+<section class="panel form-card">
+  <h1>{% if object %}Редактировать программу{% else %}Создать программу{% endif %}</h1>
+  <form method="post" data-validate>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn--accent">Сохранить</button>
+  </form>
+</section>
+{% endblock %}

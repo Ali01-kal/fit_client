@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Клиенты{% endblock %}
+{% block content %}
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <a href="{% url 'core:home' %}">Главная</a>
+  <span>Клиенты</span>
+</nav>
+<section class="section-head clients-page-head">
+  <h1 class="page-title-dark">Клиенты</h1>
+  {% if request.user.is_authenticated %}<a href="{% url 'clients:create' %}" class="btn btn--accent clients-add-btn">Добавить клиента</a>{% endif %}
+</section>
+<section class="panel clients-page-panel">
+  <form method="get" class="filters" data-live-filter>
+    <input type="search" name="search" value="{{ filters.search }}" placeholder="Поиск по имени/email">
+    <select name="status" class="clients-dark-select">
+      <option value="">Статус</option>
+      <option value="active" {% if filters.status == 'active' %}selected{% endif %}>Активный</option>
+      <option value="inactive" {% if filters.status == 'inactive' %}selected{% endif %}>Неактивный</option>
+    </select>
+    <select name="ordering" class="clients-dark-select">
+      <option value="name">Имя A-Z</option>
+      <option value="-name" {% if filters.ordering == '-name' %}selected{% endif %}>Имя Z-A</option>
+      <option value="-created_at" {% if filters.ordering == '-created_at' %}selected{% endif %}>Новые</option>
+    </select>
+    <button class="btn btn--ghost" type="submit">Применить</button>
+  </form>
+  <div class="grid grid--3" id="live-filter-target">
+    {% for client in clients %}
+      <article class="card hover-lift">
+        <div class="card__body">
+          <div class="client-card-avatar-wrap">
+            {% if client.avatar %}
+              <img class="client-card-avatar" src="{{ client.avatar.url }}" alt="Аватар {{ client.name }}">
+            {% else %}
+              <div class="client-card-avatar client-card-avatar--ph" aria-hidden="true">{{ client.name|slice:":1" }}</div>
+            {% endif %}
+          </div>
+          <h3><a href="{% url 'clients:detail' client.slug %}">{{ client.name }}</a></h3>
+          <p>{{ client.email }}<br>{{ client.phone }}</p>
+          <p>Тренер: {{ client.primary_trainer|default:"—" }}</p>
+          {% if request.user.is_authenticated and client.id in favorite_client_ids %}
+            <span class="badge badge--warning">В избранном</span>
+          {% endif %}
+          <span class="badge {% if client.is_active %}badge--success{% else %}badge--muted{% endif %}">
+            {% if client.is_active %}Активен{% else %}Неактивен{% endif %}
+          </span>
+        </div>
+      </article>
+    {% empty %}
+      <p class="empty">Нет клиентов по выбранным фильтрам.</p>
+    {% endfor %}
+  </div>
+  {% include "includes/pagination.html" with page_obj=page_obj filters=filters %}
+</section>
+{% endblock %}

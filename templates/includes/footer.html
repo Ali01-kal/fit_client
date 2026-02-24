@@ -1,0 +1,17 @@
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>
+      <h3>fitClient</h3>
+      <p>Система управления клиентами фитнес‑центра.</p>
+    </div>
+    <div>
+      <p>Клиентов: {{ global_stats.clients }}</p>
+      <p>Тренеров: {{ global_stats.trainers }}</p>
+      <p>Программ: {{ global_stats.programs }}</p>
+    </div>
+    <div>
+      <a href="{% url 'core:about' %}">О проекте</a>
+      <a href="{% url 'core:contact' %}">Контакты</a>
+    </div>
+  </div>
+</footer>

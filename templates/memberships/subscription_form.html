@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Создать подписку{% endblock %}
+{% block content %}
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <a href="{% url 'core:home' %}">Главная</a>
+  <a href="{% url 'memberships:plans' %}">Абонементы</a>
+  <span>Оформить</span>
+</nav>
+<section class="panel form-card">
+  <h1>Создать абонемент клиента</h1>
+  <p>Выберите клиента, проверьте тариф, оставьте <strong>Статус = active</strong> и <strong>Посещений использовано = 0</strong> для нового абонемента.</p>
+  <form method="post" data-validate>{% csrf_token %}{{ form.as_p }}<button class="btn btn--accent">Сохранить</button></form>
+</section>
+{% endblock %}

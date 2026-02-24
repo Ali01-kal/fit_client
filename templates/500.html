@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}500{% endblock %}
+{% block content %}
+<section class="error-page">
+  <h1>500</h1>
+  <p>Внутренняя ошибка сервера.</p>
+  <a class="btn btn--accent" href="{% url 'core:home' %}">На главную</a>
+</section>
+{% endblock %}

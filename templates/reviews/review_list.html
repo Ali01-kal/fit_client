@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Отзывы{% endblock %}
+{% block content %}
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <a href="{% url 'core:home' %}">Главная</a>
+  <span>Отзывы</span>
+</nav>
+<section class="section-head">
+  <h1 class="page-title-dark">Отзывы</h1>
+  <div class="row gap">
+    <span class="badge badge--info reviews-rating-badge">Средний рейтинг: {{ avg_rating|floatformat:1 }}</span>
+    <a href="{% url 'reviews:create' %}" class="btn btn--accent reviews-action-btn">Добавить отзыв</a>
+  </div>
+</section>
+<section class="panel">
+  <div class="review-stack">
+    {% for review in reviews %}
+      <article class="quote hover-fade">
+        <header class="row spread">
+          <strong>{{ review.client.name }}</strong>
+          <span>{{ review.rating }}/5</span>
+        </header>
+        <p>{{ review.comment }}</p>
+        <footer>{{ review.program|default:review.trainer|default:"—" }}</footer>
+      </article>
+    {% empty %}<p>Пока нет отзывов.</p>{% endfor %}
+  </div>
+  {% include "includes/pagination.html" with page_obj=page_obj %}
+</section>
+{% endblock %}

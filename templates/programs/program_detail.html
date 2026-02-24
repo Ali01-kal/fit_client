@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}{{ object.name }}{% endblock %}
+{% block content %}
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <a href="{% url 'core:home' %}">Главная</a>
+  <a href="{% url 'programs:list' %}">Программы</a>
+  <span>{{ object.name }}</span>
+</nav>
+<section class="section-head">
+  <h1>{{ object.name }}</h1>
+  <div class="row gap">
+    {% if request.user.is_authenticated %}
+      <a href="{% url 'programs:edit' object.slug %}" class="btn btn--accent programs-detail-edit-btn">Редактировать</a>
+    {% endif %}
+  </div>
+</section>
+<section class="grid grid--2">
+  <div class="panel">
+    <p class="eyebrow">{{ object.category|default:"Без категории" }}</p>
+    <p>{{ object.description }}</p>
+    <p>Тренер: {{ object.trainer|default:"—" }}</p>
+    <p>Сложность: {{ object.get_difficulty_display }}</p>
+    <p>Длительность: {{ object.duration_minutes }} минут</p>
+    <p>Средний рейтинг: {{ average_rating|floatformat:1 }}</p>
+  </div>
+  <div class="panel">
+    <h2>Упражнения</h2>
+    <ol>
+      {% for ex in object.exercises.all %}
+        <li>{{ ex.name }} — {{ ex.sets }}x{{ ex.reps }} ({{ ex.rest_seconds }} сек отдых)</li>
+      {% empty %}<li>Список упражнений пуст.</li>{% endfor %}
+    </ol>
+    <h2>Оборудование</h2>
+    <ul class="clean-list">
+      {% for eq in object.equipments.all %}
+        <li>{{ eq.name }}</li>
+      {% empty %}<li>Не указано</li>{% endfor %}
+    </ul>
+  </div>
+</section>
+{% endblock %}

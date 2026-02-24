@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}fitClient | Dashboard{% endblock %}
+{% block content %}
+<section class="section-head"><h1>Панель управления</h1></section>
+<section class="grid grid--4">
+  <div class="metric-card"><span>Клиенты</span><strong>{{ stats.clients }}</strong></div>
+  <div class="metric-card"><span>Программы</span><strong>{{ stats.programs }}</strong></div>
+  <div class="metric-card"><span>Активные абонементы</span><strong>{{ stats.active_subscriptions }}</strong></div>
+  <div class="metric-card"><span>Средний рейтинг</span><strong>{{ stats.avg_rating|floatformat:1 }}</strong></div>
+</section>
+<section class="section grid grid--2">
+  <div class="panel">
+    <h2>Новые клиенты</h2>
+    <ul class="clean-list">
+      {% for client in recent_clients %}
+        <li><a href="{% url 'clients:detail' client.slug %}">{{ client.name }}</a> — {{ client.primary_trainer|default:"без тренера" }}</li>
+      {% empty %}<li>Нет данных</li>{% endfor %}
+    </ul>
+  </div>
+  <div class="panel">
+    <h2>Категории программ</h2>
+    <ul class="clean-list">
+      {% for cat in top_categories %}
+        <li class="row spread"><span>{{ cat.name }}</span><span>{{ cat.total }}</span></li>
+      {% empty %}<li>Нет данных</li>{% endfor %}
+    </ul>
+  </div>
+</section>
+{% endblock %}

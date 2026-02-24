@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Вход{% endblock %}
+{% block content %}
+<section class="zc-auth-shell">
+  <div class="zc-auth-card">
+    <h1>Вход</h1>
+    <form method="post" data-validate class="zc-auth-form">
+      {% csrf_token %}
+      <p class="zc-help">Если несколько раз ошибиться с паролем подряд, вход будет временно ограничен (простая защита от перебора).</p>
+      {% if form.non_field_errors %}
+        <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+      {% endif %}
+      <div class="zc-field">
+        <label for="{{ form.username.id_for_label }}">Имя пользователя</label>
+        {{ form.username }}
+        {% if form.username.errors %}<small class="text-danger">{{ form.username.errors|striptags }}</small>{% endif %}
+      </div>
+      <div class="zc-field">
+        <label for="{{ form.password.id_for_label }}">Пароль</label>
+        {{ form.password }}
+        {% if form.password.errors %}<small class="text-danger">{{ form.password.errors|striptags }}</small>{% endif %}
+      </div>
+      {% if request.GET.next %}<input type="hidden" name="next" value="{{ request.GET.next }}">{% endif %}
+      <button type="submit" class="button boxed-btn zc-auth-submit">Войти</button>
+    </form>
+    <div class="zc-auth-links">
+      <a href="{% url 'password_reset' %}">Забыли пароль?</a>
+      <a href="{% url 'accounts:register' %}">Регистрация</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Программы{% endblock %}
+{% block content %}
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <a href="{% url 'core:home' %}">Главная</a>
+  <span>Программы</span>
+</nav>
+<section class="section-head programs-page-head">
+  <h1 class="page-title-dark">Программы тренировок</h1>
+  {% if request.user.is_authenticated %}<a href="{% url 'programs:create' %}" class="btn btn--accent programs-add-btn">Добавить программу</a>{% endif %}
+</section>
+<section class="panel programs-page-panel">
+  <form method="get" class="filters" data-live-filter>
+    <input type="search" name="search" value="{{ filters.search }}" placeholder="Поиск программы">
+    <select name="difficulty" class="dark-select-ui">
+      <option value="">Сложность</option>
+      <option value="beginner" {% if filters.difficulty == 'beginner' %}selected{% endif %}>Beginner</option>
+      <option value="mid" {% if filters.difficulty == 'mid' %}selected{% endif %}>Intermediate</option>
+      <option value="pro" {% if filters.difficulty == 'pro' %}selected{% endif %}>Pro</option>
+    </select>
+    <select name="ordering" class="dark-select-ui">
+      <option value="name">Имя A-Z</option>
+      <option value="-duration_minutes" {% if filters.ordering == '-duration_minutes' %}selected{% endif %}>Сначала длинные</option>
+    </select>
+    <button class="btn btn--ghost" type="submit">Фильтр</button>
+  </form>
+  <div class="grid grid--3" id="live-filter-target">
+    {% for program in programs %}
+      {% include "includes/card_program.html" with program=program %}
+    {% empty %}
+      <p class="empty">Программы не найдены.</p>
+    {% endfor %}
+  </div>
+  {% include "includes/pagination.html" with page_obj=page_obj filters=filters %}
+</section>
+{% endblock %}

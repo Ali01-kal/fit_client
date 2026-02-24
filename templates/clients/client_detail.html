@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load fitness_extras %}
+{% block title %}{{ object.name }}{% endblock %}
+{% block content %}
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <a href="{% url 'core:home' %}">Главная</a>
+  <a href="{% url 'clients:list' %}">Клиенты</a>
+  <span>{{ object.name }}</span>
+</nav>
+<section class="section-head client-detail-head">
+  <h1>{{ object.name }}</h1>
+  <div class="row gap client-detail-actions">
+    <a class="btn btn--ghost client-detail-btn" href="{% url 'clients:favorite' object.slug %}">
+      {% if is_favorite %}Убрать из избранного{% else %}В избранное{% endif %}
+    </a>
+    {% if request.user.is_authenticated %}
+      <a class="btn btn--accent client-detail-btn" href="{% url 'clients:edit' object.slug %}">Редактировать</a>
+    {% endif %}
+  </div>
+</section>
+<section class="grid grid--2">
+  <div class="panel">
+    <p><strong>Email:</strong> {{ object.email }}</p>
+    <p><strong>Телефон:</strong> {{ object.phone }}</p>
+    <p><strong>Возраст:</strong> {{ object.age|default:"—" }}</p>
+    <p><strong>Тренер:</strong> {{ object.primary_trainer|default:"—" }}</p>
+    <p>{{ object.notes|default:"Комментариев нет." }}</p>
+  </div>
+  <div class="panel client-detail-info-panel">
+    <h2 class="client-detail-center-title">Абонементы</h2>
+    <ul class="clean-list client-detail-list">
+      {% for sub in object.subscriptions.all %}
+        <li class="row spread client-detail-list-row">
+          <span class="client-detail-list-text">{{ sub.plan.name }} ({{ sub.starts_on }} - {{ sub.ends_on }})</span>
+          <span class="{{ sub.status|status_badge }}">{{ sub.get_status_display }}</span>
+        </li>
+      {% empty %}<li>Нет абонементов</li>{% endfor %}
+    </ul>
+    <h2 class="client-detail-center-title">Метрики</h2>
+    <ul class="clean-list client-detail-list client-detail-list--center">
+      {% for m in object.metrics.all|slice:":5" %}
+        <li>{{ m.measured_at }} • {{ m.weight_kg }} кг • BMI {{ m.bmi|default:"—" }}</li>
+      {% empty %}<li>Нет измерений</li>{% endfor %}
+    </ul>
+  </div>
+</section>
+{% endblock %}

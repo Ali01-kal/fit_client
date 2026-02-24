@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Профиль{% endblock %}
+{% block content %}
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <a href="{% url 'core:home' %}">Главная</a>
+  <span>Профиль</span>
+</nav>
+<section class="panel profile-grid">
+  <div>
+    {% if object.avatar %}<img class="avatar-lg" src="{{ object.avatar.url }}" alt="Аватар {{ request.user.username }}">{% else %}<div class="avatar-lg placeholder">👤</div>{% endif %}
+  </div>
+  <div>
+    <h1>{{ request.user.get_full_name|default:request.user.username }}</h1>
+    <p>{{ request.user.email }}</p>
+    <p>Роль: <strong>{{ object.get_role_display }}</strong></p>
+    <p>Телефон: {{ object.phone|default:"—" }}</p>
+    <p>{{ object.bio|default:"Описание отсутствует" }}</p>
+    <a href="{% url 'accounts:profile_edit' %}" class="btn btn--accent">Редактировать</a>
+  </div>
+</section>
+<section class="grid grid--3">
+  <div class="panel">
+    <h2>Мои избранные клиенты</h2>
+    <ul class="clean-list">
+      {% for fav in favorite_clients %}
+        <li><a href="{% url 'clients:detail' fav.client.slug %}">{{ fav.client.name }}</a></li>
+      {% empty %}<li>Пока нет избранных клиентов</li>{% endfor %}
+    </ul>
+  </div>
+  <div class="panel">
+    <h2>Мои отзывы</h2>
+    <ul class="clean-list">
+      {% for review in my_reviews %}
+        <li>{{ review.created_at|date:"d.m.Y" }} • {{ review.rating }}/5 • {{ review.program|default:review.trainer|default:"—" }}</li>
+      {% empty %}<li>Пока нет отзывов</li>{% endfor %}
+    </ul>
+  </div>
+  <div class="panel">
+    <h2>Мои абонементы</h2>
+    <ul class="clean-list">
+      {% for sub in my_subscriptions %}
+        <li>{{ sub.plan.name }} • {{ sub.get_status_display }}</li>
+      {% empty %}<li>Нет связанных абонементов</li>{% endfor %}
+    </ul>
+  </div>
+</section>
+{% endblock %}

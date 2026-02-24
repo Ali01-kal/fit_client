@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Отчёты{% endblock %}
+{% block content %}
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <a href="{% url 'core:home' %}">Главная</a>
+  <span>Отчёты</span>
+</nav>
+<section class="section-head reports-page-head"><h1 class="page-title-dark">Отчёты и статистика</h1></section>
+<section class="grid grid--3">
+  <div class="metric-card"><span>Клиенты</span><strong>{{ metrics.clients_total }}</strong></div>
+  <div class="metric-card"><span>Активные абонементы</span><strong>{{ metrics.subscriptions_active }}</strong></div>
+  <div class="metric-card"><span>Средний отзыв</span><strong>{{ metrics.avg_review|floatformat:1 }}</strong></div>
+</section>
+<section class="grid grid--2 reports-panels-grid">
+  <div class="panel reports-panel">
+    <h2>Программы по категориям</h2>
+    <ul class="clean-list reports-clean-list">
+      {% for row in category_stats %}
+        <li class="row"><span>{{ row.name }}</span></li>
+      {% empty %}<li>Нет данных</li>{% endfor %}
+    </ul>
+  </div>
+  <div class="panel reports-panel">
+    <h2>Клиенты по числу отзывов</h2>
+    <ul class="clean-list reports-clean-list">
+      {% for row in top_clients %}
+        <li class="row"><span>{{ row.name }}</span></li>
+      {% empty %}<li>Нет данных</li>{% endfor %}
+    </ul>
+  </div>
+</section>
+{% endblock %}

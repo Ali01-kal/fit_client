@@ -29,7 +29,7 @@
             <div class="col-xl-6 col-lg-6">
                 <div class="single-topic text-center mb-30">
                     <div class="topic-img">
-                        <img src="{% static 'vendor/zacson/assets/img/gallery/cat1.png' %}" alt="Clients">
+                        <img src="{% static 'vendor/zacson/assets/img/gallery/cat1.png' %}" alt="Иллюстрация раздела клиентов">
                         <div class="topic-content-box">
                             <div class="topic-content">
                                 <h3>Клиенттер базасы</h3>
@@ -43,7 +43,7 @@
             <div class="col-xl-6 col-lg-6">
                 <div class="single-topic text-center mb-30">
                     <div class="topic-img">
-                        <img src="{% static 'vendor/zacson/assets/img/gallery/cat2.png' %}" alt="Programs">
+                        <img src="{% static 'vendor/zacson/assets/img/gallery/cat2.png' %}" alt="Иллюстрация программ и абонементов">
                         <div class="topic-content-box">
                             <div class="topic-content">
                                 <h3>Программы и абонементы</h3>
@@ -70,7 +70,7 @@
         <div class="row">
             <div class="col-lg-4 col-md-6">
                 <div class="single-cat text-center mb-30 wow fadeInUp">
-                    <div class="cat-icon"><img src="{% static 'vendor/zacson/assets/img/gallery/team1.png' %}" alt="clients"></div>
+                    <div class="cat-icon"><img src="{% static 'vendor/zacson/assets/img/gallery/team1.png' %}" alt="Иконка статистики клиентов"></div>
                     <div class="cat-cap">
                         <h5><a href="{% url 'clients:list' %}">Клиенты</a></h5>
                         <p>Жүйеде тіркелген клиенттер саны</p>
@@ -80,7 +80,7 @@
             </div>
             <div class="col-lg-4 col-md-6">
                 <div class="single-cat text-center mb-30 wow fadeInUp">
-                    <div class="cat-icon"><img src="{% static 'vendor/zacson/assets/img/gallery/team2.png' %}" alt="trainers"></div>
+                    <div class="cat-icon"><img src="{% static 'vendor/zacson/assets/img/gallery/team2.png' %}" alt="Иконка статистики тренеров"></div>
                     <div class="cat-cap">
                         <h5><a href="{% url 'reports:dashboard' %}">Тренеры</a></h5>
                         <p>Жаттықтырушылар және жүктеме аналитикасы</p>
@@ -90,7 +90,7 @@
             </div>
             <div class="col-lg-4 col-md-6">
                 <div class="single-cat text-center mb-30 wow fadeInUp">
-                    <div class="cat-icon"><img src="{% static 'vendor/zacson/assets/img/gallery/team3.png' %}" alt="programs"></div>
+                    <div class="cat-icon"><img src="{% static 'vendor/zacson/assets/img/gallery/team3.png' %}" alt="Иконка статистики программ"></div>
                     <div class="cat-cap">
                         <h5><a href="{% url 'programs:list' %}">Программы</a></h5>
                         <p>Тренировка бағдарламалары мен категориялары</p>
@@ -113,7 +113,7 @@
                         <div class="overlay-content zc-overlay-card">
                             <h3>{{ program.name }}</h3>
                             <p>{{ program.get_difficulty_display }} • {{ program.duration_minutes }} мин</p>
-                            <a href="{% url 'programs:detail' program.slug %}"><i class="ti-plus"></i></a>
+                            <a href="{% url 'programs:detail' program.slug %}" aria-label="Открыть программу {{ program.name }}"><i class="ti-plus" aria-hidden="true"></i></a>
                         </div>
                     </div>
                 </div>

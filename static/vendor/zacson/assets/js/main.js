@@ -194,20 +194,28 @@
     }
 
 /* 13. counterUp*/
-    $('.counter').counterUp({
-      delay: 10,
-      time: 3000
-    });
+    if ($.fn.counterUp) {
+      $('.counter').counterUp({
+        delay: 10,
+        time: 3000
+      });
+    }
 
 /* 14. Datepicker */
-  $('#datepicker1').datepicker();
+  if ($.fn.datepicker) {
+    $('#datepicker1').datepicker();
+  }
 
 // 15. Time Picker
-  $('#timepicker').timepicker();
+  if ($.fn.timepicker) {
+    $('#timepicker').timepicker();
+  }
 
 //16. Overlay
-  $(".snake").snakeify({
-    speed: 200
-  });
+  if ($.fn.snakeify) {
+    $(".snake").snakeify({
+      speed: 200
+    });
+  }
 
 })(jQuery);

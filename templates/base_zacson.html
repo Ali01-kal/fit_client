@@ -13,7 +13,6 @@
     <link rel="stylesheet" href="{% static 'vendor/zacson/assets/css/owl.carousel.min.css' %}">
     <link rel="stylesheet" href="{% static 'vendor/zacson/assets/css/slicknav.css' %}">
     <link rel="stylesheet" href="{% static 'vendor/zacson/assets/css/flaticon.css' %}">
-    <link rel="stylesheet" href="{% static 'vendor/zacson/assets/css/gijgo.css' %}">
     <link rel="stylesheet" href="{% static 'vendor/zacson/assets/css/animate.min.css' %}">
     <link rel="stylesheet" href="{% static 'vendor/zacson/assets/css/animated-headline.css' %}">
     <link rel="stylesheet" href="{% static 'vendor/zacson/assets/css/magnific-popup.css' %}">
@@ -26,6 +25,7 @@
     {% block styles %}{% endblock %}
 </head>
 <body class="black-bg zc-app {% block body_class %}zc-inner{% endblock %}">
+    <a href="#main-content" class="sr-only sr-only-focusable">Skip to content</a>
     <div id="preloader-active">
         <div class="preloader d-flex align-items-center justify-content-center">
             <div class="preloader-inner position-relative">
@@ -46,7 +46,7 @@
                             <a href="{% url 'core:home' %}" class="zc-logo-text">fitClient</a>
                         </div>
                         <div class="main-menu f-right d-none d-lg-block">
-                            <nav>
+                            <nav aria-label="Основная навигация">
                                 <ul id="navigation">
                                     <li><a href="{% url 'core:home' %}" data-i18n="nav.home">Home</a></li>
                                     <li><a href="{% url 'core:about' %}" data-i18n="footer.about">About</a></li>
@@ -60,8 +60,8 @@
                             </nav>
                         </div>
                         <div class="header-btns d-none d-lg-flex f-right align-items-center zc-toolbar">
-                            <button type="button" class="zc-pill-btn" data-lang-toggle>KZ</button>
-                            <button type="button" class="zc-pill-btn" data-theme-toggle>Dark</button>
+                            <button type="button" class="zc-pill-btn" data-lang-toggle aria-label="Переключить язык">KZ</button>
+                            <button type="button" class="zc-pill-btn" data-theme-toggle aria-label="Переключить тему">Dark</button>
                             {% if request.user.is_authenticated %}
                                 <a href="{% url 'accounts:profile' %}" class="btn zc-small-btn" data-i18n="nav.profile">Profile</a>
                             {% else %}
@@ -80,7 +80,7 @@
     {% block page_banner %}{% endblock %}
 
     {% block content_wrapper_open %}
-    <main class="zc-main-wrap">
+    <main class="zc-main-wrap" id="main-content">
       <div class="container">
     {% endblock %}
 
@@ -115,7 +115,7 @@
                                     <div class="main-header main-header2">
                                         <div class="menu-wrapper menu-wrapper2">
                                             <div class="main-menu main-menu2 text-center">
-                                                <nav>
+                                                <nav aria-label="Навигация в футере">
                                                     <ul>
                                                         <li><a href="{% url 'core:home' %}" data-i18n="nav.home">Home</a></li>
                                                         <li><a href="{% url 'clients:list' %}" data-i18n="nav.clients">Clients</a></li>
@@ -130,9 +130,9 @@
                                     </div>
                                 </div>
                                 <div class="footer-social mt-30 wow fadeInUp" data-wow-duration="3s" data-wow-delay=".8s">
-                                    <a href="{% url 'api:stats' %}" title="API"><i class="fas fa-code"></i></a>
-                                    <a href="{% url 'core:dashboard' %}" title="Dashboard"><i class="fas fa-chart-line"></i></a>
-                                    <a href="{% url 'admin:index' %}" title="Admin"><i class="fas fa-user-shield"></i></a>
+                                    <a href="{% url 'api:stats' %}" title="API" aria-label="Open API statistics endpoint"><i class="fas fa-code" aria-hidden="true"></i></a>
+                                    <a href="{% url 'core:dashboard' %}" title="Dashboard" aria-label="Open dashboard"><i class="fas fa-chart-line" aria-hidden="true"></i></a>
+                                    <a href="{% url 'admin:index' %}" title="Admin" aria-label="Open Django admin"><i class="fas fa-user-shield" aria-hidden="true"></i></a>
                                 </div>
                                 <div class="mt-25 text-white zc-footer-stats">
                                     <span>Clients: {{ global_stats.clients }}</span>
@@ -160,28 +160,26 @@
         </div>
     </footer>
 
-    <div id="back-top"><a title="Go to Top" href="#"> <i class="fas fa-level-up-alt"></i></a></div>
+    <div id="back-top"><a title="Go to Top" href="#" aria-label="Go to top"> <i class="fas fa-level-up-alt" aria-hidden="true"></i></a></div>
 
-    <script src="{% static 'vendor/zacson/assets/js/vendor/modernizr-3.5.0.min.js' %}"></script>
-    <script src="{% static 'vendor/zacson/assets/js/vendor/jquery-1.12.4.min.js' %}"></script>
-    <script src="{% static 'vendor/zacson/assets/js/popper.min.js' %}"></script>
-    <script src="{% static 'vendor/zacson/assets/js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'vendor/zacson/assets/js/jquery.slicknav.min.js' %}"></script>
-    <script src="{% static 'vendor/zacson/assets/js/owl.carousel.min.js' %}"></script>
-    <script src="{% static 'vendor/zacson/assets/js/slick.min.js' %}"></script>
-    <script src="{% static 'vendor/zacson/assets/js/wow.min.js' %}"></script>
-    <script src="{% static 'vendor/zacson/assets/js/animated.headline.js' %}"></script>
-    <script src="{% static 'vendor/zacson/assets/js/jquery.magnific-popup.js' %}"></script>
-    <script src="{% static 'vendor/zacson/assets/js/gijgo.min.js' %}"></script>
-    <script src="{% static 'vendor/zacson/assets/js/jquery.nice-select.min.js' %}"></script>
-    <script src="{% static 'vendor/zacson/assets/js/jquery.sticky.js' %}"></script>
-    <script src="{% static 'vendor/zacson/assets/js/jquery.counterup.min.js' %}"></script>
-    <script src="{% static 'vendor/zacson/assets/js/waypoints.min.js' %}"></script>
-    <script src="{% static 'vendor/zacson/assets/js/jquery.countdown.min.js' %}"></script>
-    <script src="{% static 'vendor/zacson/assets/js/hover-direction-snake.min.js' %}"></script>
-    <script src="{% static 'vendor/zacson/assets/js/plugins.js' %}"></script>
-    <script src="{% static 'vendor/zacson/assets/js/main.js' %}"></script>
-    <script src="{% static 'js/app.js' %}?v=20260223-1"></script>
+    <script src="{% static 'vendor/zacson/assets/js/vendor/modernizr-3.5.0.min.js' %}" defer></script>
+    <script src="{% static 'vendor/zacson/assets/js/vendor/jquery-1.12.4.min.js' %}" defer></script>
+    <script src="{% static 'vendor/zacson/assets/js/popper.min.js' %}" defer></script>
+    <script src="{% static 'vendor/zacson/assets/js/bootstrap.min.js' %}" defer></script>
+    <script src="{% static 'vendor/zacson/assets/js/jquery.slicknav.min.js' %}" defer></script>
+    <script src="{% static 'vendor/zacson/assets/js/owl.carousel.min.js' %}" defer></script>
+    <script src="{% static 'vendor/zacson/assets/js/slick.min.js' %}" defer></script>
+    <script src="{% static 'vendor/zacson/assets/js/wow.min.js' %}" defer></script>
+    <script src="{% static 'vendor/zacson/assets/js/animated.headline.js' %}" defer></script>
+    <script src="{% static 'vendor/zacson/assets/js/jquery.magnific-popup.js' %}" defer></script>
+    <script src="{% static 'vendor/zacson/assets/js/jquery.nice-select.min.js' %}" defer></script>
+    <script src="{% static 'vendor/zacson/assets/js/jquery.sticky.js' %}" defer></script>
+    <script src="{% static 'vendor/zacson/assets/js/jquery.counterup.min.js' %}" defer></script>
+    <script src="{% static 'vendor/zacson/assets/js/waypoints.min.js' %}" defer></script>
+    <script src="{% static 'vendor/zacson/assets/js/hover-direction-snake.min.js' %}" defer></script>
+    <script src="{% static 'vendor/zacson/assets/js/plugins.js' %}" defer></script>
+    <script src="{% static 'vendor/zacson/assets/js/main.js' %}" defer></script>
+    <script src="{% static 'js/app.js' %}?v=20260223-1" defer></script>
     {% block scripts %}{% endblock %}
 </body>
 </html>

@@ -128,6 +128,22 @@ input:focus, select:focus, textarea:focus { border-color: var(--accent); box-sha
 .modal-backdrop.is-open { display: flex; animation: fade .2s ease; }
 .modal { width: min(540px, 100%); background: var(--bg-soft); border: 1px solid var(--line); border-radius: 18px; padding: 1rem; box-shadow: var(--shadow); }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.sr-only-focusable:focus,
+.sr-only-focusable:focus-visible {
+  clip: auto;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  white-space: normal;
+  position: fixed;
+  top: .75rem;
+  left: .75rem;
+  z-index: 2000;
+  background: #111;
+  color: #fff;
+  padding: .55rem .8rem;
+  border-radius: .5rem;
+}
 @keyframes reveal { to { opacity: 1; transform: translateY(0); } }
 @keyframes slide-in { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes fade { from { opacity: 0; } to { opacity: 1; } }

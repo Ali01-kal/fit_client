@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # fitClient (Fitness Client Management System)
 
 `fitClient` — Django-проект для управления фитнес-клиентами, тренерами, программами тренировок, абонементами, отзывами и отчётами.
@@ -69,6 +68,10 @@ python manage.py runserver
 - После `python manage.py migrate` автоматически создаются группы `member`, `trainer`, `manager` (через `post_migrate`)
 - Для `trainer` и `manager` назначается базовый набор permissions (`clients/programs/memberships/reviews`)
 - Проверить можно в Django admin: `Authentication and Authorization -> Groups`
+- Демонстрация для сдачи:
+  1. Открыть `admin -> Groups` и показать `member/trainer/manager`
+  2. Открыть permissions внутри группы `manager`
+  3. Показать, что обычный пользователь без `is_staff` не входит в `/admin/`
 
 ## Статика и медиа
 
@@ -77,6 +80,17 @@ python manage.py runserver
 - На сервере выполните: `python manage.py collectstatic --noinput`
 - Для аватаров и изображений используется `ImageField`; в шаблонах добавлены placeholder-ы при отсутствии файла
 - На проде нужно настроить отдачу `MEDIA_URL` веб-сервером/хостингом (Nginx/static media mapping)
+- Локальная проверка загрузки медиа: загрузить аватар клиента и проверить отображение в `/clients/` и `/accounts/profile/`
+- Прод-проверка (после деплоя): загрузить тестовый файл и открыть его URL по HTTPS
+
+## Оптимизация ассетов и доступность
+
+- В базовом шаблоне отключены неиспользуемые include (`gijgo.css`, `gijgo.min.js`, `jquery.countdown.min.js`)
+- Основные JS подключаются с `defer` для ускорения первой отрисовки
+- В `vendor/zacson/assets/js/main.js` добавлены проверки наличия плагинов (`datepicker`, `timepicker`, `counterUp`, `snakeify`)
+- Добавлен `Skip to content` и `aria-label` для icon-only кнопок/ссылок
+- Улучшены `alt`-тексты изображений на главной странице
+- Поддерживаются видимые `focus-visible` стили и клавиатурная навигация
 
 ## Деплой (домен + хостинг + PostgreSQL)
 
@@ -132,7 +146,4 @@ python manage.py runserver
 3. Включить HTTPS
 4. Заполнить реальный URL в README
 5. Проверить доступность сайта `01.06.2026`
-6. Обновить страницу `/about/` реальными именами участников и ролями команды
-=======
-# fit_client
->>>>>>> b6bac17b3b250402895cdce5c59d250a1136dfa7
+6. Обновить страницу `/about/` реальными именами участников и ролями команды (для индивидуального проекта достаточно одного автора)
